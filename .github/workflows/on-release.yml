@@ -31,7 +31,10 @@ jobs:
         git commit -m "Append timestamp to README.md"
 
     - name: Push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
         git push origin version-bump
     
     - name: create PR
