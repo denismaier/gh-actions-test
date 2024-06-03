@@ -1,0 +1,51 @@
+name: Update README with .xpi SHA256
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get release asset information
+        id: get_release
+        run: |
+          asset_url=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r '.assets[] | select(.name | endswith(".xpi")) | .browser_download_url')
+          echo "::set-output name=asset_url::$asset_url"
+      
+      - name: Download the .xpi asset
+        run: |
+          curl -L ${{ steps.get_release.outputs.asset_url }} -o asset.xpi
+
+      - name: Calculate SHA256 checksum
+        id: calculate_sha
+        run: |
+          sha256sum asset.xpi | awk '{print $1}' > sha256.txt
+          checksum=$(cat sha256.txt)
+          echo "::set-output name=checksum::$checksum"
+
+      - name: Create and switch to new branch
+        run: |
+          git checkout -b update-target
+
+      - name: Append checksum to README.md
+        run: |
+          echo "SHA256 Checksum: ${{ steps.calculate_sha.outputs.checksum }}" >> README.md
+          git add README.md
+          git commit -m "Add SHA256 checksum of .xpi asset"
+
+      - name: Push changes
+        run: |
+          git push --set-upstream origin update-target
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: update-target
+          title: "Update README with .xpi SHA256 checksum"
+          body: "This PR updates the README.md with the SHA256 checksum of the latest .xpi release asset."
