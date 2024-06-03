@@ -7,7 +7,7 @@ fi
 
 echo "Building version ${version}"
 
-assetname=zotero-swisscovery-ubbern-locations
+assetname=gh-actions-test
 
 ## Update install.rdf and manifest.json
 
