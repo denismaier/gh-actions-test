@@ -1,0 +1,22 @@
+{
+  "addons": {
+    "zoteroswisscoveryubbernlocations@ubbe.org": {
+      "updates": [
+        {
+          "version": "0.1.1",
+          "update_link": "https://github.com/denismaier/gh-actions-test/releases/download/0.1.1/gh-actions-test-0.1.1.xpi",
+          "update_hash": "sha256:4c0a2f4fdcc5d8c07c082abb2d80c5fcfff4bf5270324a852242debabb112c8a",
+          "applications": {
+            "gecko": {
+              "strict_min_version": "60.0"
+            },
+            "zotero": {
+              "strict_min_version": "6.999",
+              "strict_max_version": "7.0.*"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
