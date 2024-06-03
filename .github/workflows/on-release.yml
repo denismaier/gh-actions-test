@@ -30,14 +30,11 @@ jobs:
         git add README.md
         git commit -m "Append timestamp to README.md"
 
-    - name: Push changes and create PR
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Push changes
       run: |
         git push origin version-bump
     
-    - name: Push changes and create PR
+    - name: create PR
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-          gh pr create --title "Update README with timestamp" --body "This PR appends the current timestamp to the README file."
+      run: gh pr create --title "Update README with timestamp" --body "This PR appends the current timestamp to the README file."
