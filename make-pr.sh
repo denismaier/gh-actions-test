@@ -13,8 +13,8 @@ echo "Next version set to: $version"
 ## Update install.rdf and manifest.json
 ################################################
 
-perl -pi -e "s/em:version=\"[^\"]*/em:version=\"$version/;" src/install.rdf
-# perl -pi -e "s/\"version\": \"[^\"]*\"/\"version\": \"$version\"/" src/manifest.json
+#perl -pi -e "s/em:version=\"[^\"]*/em:version=\"$version/;" src/install.rdf
+perl -pi -e "s/\"version\": \"[^\"]*\"/\"version\": \"$version\"/" src/manifest.json
 
 ################################################
 ## Make PR using the Github CLI
