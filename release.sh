@@ -1,28 +1,39 @@
 #!/bin/bash
 
 ################################################
-# Get next version number
+# Checkout master
 ################################################
 
-current=$(git describe --tags)
-
-echo "Current version: $current"
-read -r -p "Enter new version number: " version
-echo "Next version set to: $version"
+git checkout master
+git pull
 
 ################################################
-## Update install.rdf and manifest.json
+# Get version number from manifest json
 ################################################
 
-perl -pi -e "s/em:version=\"[^\"]*/em:version=\"$version/;" src/install.rdf
-# perl -pi -e "s/\"version\": \"[^\"]*\"/\"version\": \"$version\"/" src/manifest.json
+version=$(jq -r '.version' "src/manifest.json")
+
+################################################
+# Build
+################################################
+
+./build.sh $version
+
+################################################
+# Create release using the Github CLI
+################################################
+
+gh release create $version build/${assetname}-${version}.xpi -t "${version}" --generate-notes
 
 ################################################
 # Commit and push
 ################################################
 
-git add src/install.rdf #src/manifest.json
-git commit -m "Version ${version}" 1>&2
-git tag -a -m "Version ${version}" "${version}"
-git push
-git push origin "${version}"
+assetname=gh-actions-test
+updatelink=https://github.com/denismaier/gh-actions-test/releases/download/${version}/${assetname}-${version}.xpi
+
+# Update updates.json
+jq ".addons[\"zoteroswisscoveryubbernlocations@ubbe.org\"].updates[0].update_hash = \"sha256:`shasum -a 256 build/${assetname}-${version}.xpi | cut -d' ' -f1`\"" updates.json.tmpl |
+jq --arg version "$version" '.addons["zoteroswisscoveryubbernlocations@ubbe.org"].updates[0].version = $version' |
+jq --arg updatelink "$updatelink" '.addons["zoteroswisscoveryubbernlocations@ubbe.org"].updates[0].update_link = $updatelink' > updates.json
+cp updates.json update.rdf
