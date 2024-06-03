@@ -35,4 +35,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: | 
           git push origin version-bump-for-${{ github.event.release.tag_name }}
-          gh pr create --title "Update README with timestamp" --body "This PR appends the current timestamp to the README file."
+          gh pr create --title "Update README with timestamp" --body "This PR appends the current timestamp to the README file." -a denismaier
