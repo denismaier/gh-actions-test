@@ -40,9 +40,8 @@ jobs:
           echo "Built release $version"
           echo "Extract release notes from CHANGELOG.md"
           # Change notes
-          sed -n "/## \[v${version}\]/,/^## /p" CHANGELOG.md | sed '1d;$d' > release-notes-${version}-content.md
           echo "## Changes" >> release-notes-${version}.md
-          cat release-notes-${version}-content.md >> release-notes-${version}.md
+          sed -n "/## \[v${version}\]/,/^## /p" CHANGELOG.md | sed '1d;$d' >> release-notes-${version}.md
           echo "Extracted release notes from CHANGELOG.md"
           # Create release
           echo "Creating release $version"
