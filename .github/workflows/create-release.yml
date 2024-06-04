@@ -35,14 +35,5 @@ jobs:
         run: |
           version=$(jq -r '.version' src/manifest.json)
           echo "Creating release $version"
-          ./something.sh
-          #./build.sh $version
-          #
-          rm -rf build
-          mkdir build
-          #
-          cd src
-          zip -r ../build/gh-actions-test-${version}.xpi *
-          cd ..
-          #
+          ./build.sh $version
           gh release create v${version} build/gh-actions-test-${version}.xpi -t "v${version}" --generate-notes
