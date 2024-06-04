@@ -1,4 +1,8 @@
 # Changelog
+## [v0.2.2]
+- Again something
+- Another fix
+
 ## [v0.2.1]
 - New feature A
 - Enhancement B
