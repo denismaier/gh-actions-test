@@ -3,7 +3,8 @@ name: Create Release
 on:
   push:
     branches:
-      - master
+      - main
+
     paths:
       - 'src/manifest.json'
 
