@@ -18,6 +18,9 @@ jobs:
 
       - name: Echo command
         run: echo "We're up and running!"
+    
+      - name: Echo git status
+        run: git status
 
       - name: output current version
         run: |
