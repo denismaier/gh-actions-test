@@ -34,15 +34,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           version=$(jq -r '.version' src/manifest.json)
+          # Build release
           echo "Building release $version"
           ./build.sh $version
           echo "Built release $version"
           echo "Extract release notes from CHANGELOG.md"
-          # sed -n "/## \[v${version}\]/,/## /p" CHANGELOG.md | sed '$d' > release-notes-${version}.md
+          # Change notes
           sed -n "/## \[v${version}\]/,/^## /p" CHANGELOG.md | sed '1d;$d' > release-notes-${version}-content.md
           echo "## Changes" >> release-notes-${version}.md
           cat release-notes-${version}-content.md >> release-notes-${version}.md
           echo "Extracted release notes from CHANGELOG.md"
+          # Create release
           echo "Creating release $version"
           gh release create v${version} build/gh-actions-test-${version}.xpi -t "v${version}" --notes-file release-notes-${version}.md
           echo "Created release $version"
