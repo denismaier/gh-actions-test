@@ -31,24 +31,49 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
 
-      - name: create release
+      - name: Extract version number
+        id: extract_version
+        run: echo "VERSION=$(jq -r '.version' src/manifest.json)" >> $GITHUB_ENV 
+
+      - name: Build release
+        run: |
+          echo "Building release ${BUILD_BASENAME}-$VERSION"
+          ./build.sh ${BUILD_BASENAME} $VERSION
+          echo "Built release ${BUILD_BASENAME}-$VERSION"
+
+      - name: Get release notes
+        run: |
+          echo "Extract release notes from CHANGELOG.md"
+          echo "## Changes" >> release-notes-${VERSION}.md
+          sed -n "/## \[v${VERSION}\]/,/^## /p" CHANGELOG.md | sed '1d;$d' >> release-notes-${VERSION}.md
+          echo "Extracted release notes from CHANGELOG.md"
+      
+      - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          version=$(jq -r '.version' src/manifest.json)
+          echo "Creating release $VERSION"
+          gh release create v${VERSION} build/${BUILD_BASENAME}-${VERSION}.xpi -t "v${VERSION}" --notes-file release-notes-${VERSION}.md
+          echo "Created release $VERSION"
 
-          # Build release
-          echo "Building release ${BUILD_BASENAME}-$version"
-          ./build.sh ${BUILD_BASENAME} $version
-          echo "Built release ${BUILD_BASENAME}-$version"
+      # - name: create release
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     version=$(jq -r '.version' src/manifest.json)
 
-          # Change notes
-          echo "Extract release notes from CHANGELOG.md"
-          echo "## Changes" >> release-notes-${version}.md
-          sed -n "/## \[v${version}\]/,/^## /p" CHANGELOG.md | sed '1d;$d' >> release-notes-${version}.md
-          echo "Extracted release notes from CHANGELOG.md"
+      #     # Build release
+      #     echo "Building release ${BUILD_BASENAME}-$version"
+      #     ./build.sh ${BUILD_BASENAME} $version
+      #     echo "Built release ${BUILD_BASENAME}-$version"
+
+      #     # Change notes
+      #     echo "Extract release notes from CHANGELOG.md"
+      #     echo "## Changes" >> release-notes-${version}.md
+      #     sed -n "/## \[v${version}\]/,/^## /p" CHANGELOG.md | sed '1d;$d' >> release-notes-${version}.md
+      #     echo "Extracted release notes from CHANGELOG.md"
           
-          # Create release
-          echo "Creating release $version"
-          gh release create v${version} build/${BUILD_BASENAME}-${version}.xpi -t "v${version}" --notes-file release-notes-${version}.md
-          echo "Created release $version"
+      #     # Create release
+      #     echo "Creating release $version"
+      #     gh release create v${version} build/${BUILD_BASENAME}-${version}.xpi -t "v${version}" --notes-file release-notes-${version}.md
+      #     echo "Created release $version"

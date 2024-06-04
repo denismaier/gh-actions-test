@@ -3,6 +3,8 @@
 set -eou pipefail
 
 baseName=gh-actions-test
+repoOwner=denismaier
+repoName=gh-actions-test
 
 ################################################
 # Get next version number
@@ -33,7 +35,7 @@ git commit -m "bump version"
 # Update updates.json
 ################################################
 
-updatelink=https://github.com/denismaier/gh-actions-test/releases/download/${version}/${baseName}-${version}.xpi
+updatelink=https://github.com/${repoOwner}/${repoName}/releases/download/${version}/${baseName}-${version}.xpi
 
 # Update updates.json
 jq ".addons[\"zoteroswisscoveryubbernlocations@ubbe.org\"].updates[0].update_hash = \"sha256:`shasum -a 256 build/${baseName}-${version}.xpi | cut -d' ' -f1`\"" updates.json.tmpl |
