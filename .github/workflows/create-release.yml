@@ -17,17 +17,6 @@ jobs:
     steps:    
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Echo command
-        run: echo "We're up and running!"
-    
-      - name: Echo git status
-        run: git status
-
-      - name: output current version
-        run: |
-          version=$(jq -r '.version' src/manifest.json)
-          echo "Current version: $version"
     
       - name: create release
         env:
