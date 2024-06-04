@@ -35,6 +35,7 @@ jobs:
         run: |
           version=$(jq -r '.version' src/manifest.json)
           echo "Creating release $version"
+          ./something.sh
           #./build.sh $version
           #
           rm -rf build
