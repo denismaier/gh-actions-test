@@ -10,6 +10,10 @@ on:
 
   workflow_dispatch: # allows to manually trigger the workflow_dispatch
 
+env:
+  BUILD_BASENAME: gh-actions-test
+  VERSION: x.x.x # add this only to satify the linter
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -34,17 +38,17 @@ jobs:
           version=$(jq -r '.version' src/manifest.json)
 
           # Build release
-          echo "Building release $version"
-          ./build.sh $version
-          echo "Built release $version"
-          echo "Extract release notes from CHANGELOG.md"
+          echo "Building release ${BUILD_BASENAME}-$version"
+          ./build.sh ${BUILD_BASENAME} $version
+          echo "Built release ${BUILD_BASENAME}-$version"
 
           # Change notes
+          echo "Extract release notes from CHANGELOG.md"
           echo "## Changes" >> release-notes-${version}.md
           sed -n "/## \[v${version}\]/,/^## /p" CHANGELOG.md | sed '1d;$d' >> release-notes-${version}.md
           echo "Extracted release notes from CHANGELOG.md"
           
           # Create release
           echo "Creating release $version"
-          gh release create v${version} build/gh-actions-test-${version}.xpi -t "v${version}" --notes-file release-notes-${version}.md
+          gh release create v${version} build/${BUILD_BASENAME}-${version}.xpi -t "v${version}" --notes-file release-notes-${version}.md
           echo "Created release $version"

@@ -2,7 +2,7 @@
 
 set -eou pipefail
 
-assetname=gh-actions-test
+baseName=gh-actions-test
 
 ################################################
 # Get next version number
@@ -27,16 +27,16 @@ git commit -m "bump version"
 # Build
 ################################################
 
-./build.sh $version
+./build.sh $assetname $version
 
 ################################################
 # Update updates.json
 ################################################
 
-updatelink=https://github.com/denismaier/gh-actions-test/releases/download/${version}/${assetname}-${version}.xpi
+updatelink=https://github.com/denismaier/gh-actions-test/releases/download/${version}/${baseName}-${version}.xpi
 
 # Update updates.json
-jq ".addons[\"zoteroswisscoveryubbernlocations@ubbe.org\"].updates[0].update_hash = \"sha256:`shasum -a 256 build/${assetname}-${version}.xpi | cut -d' ' -f1`\"" updates.json.tmpl |
+jq ".addons[\"zoteroswisscoveryubbernlocations@ubbe.org\"].updates[0].update_hash = \"sha256:`shasum -a 256 build/${baseName}-${version}.xpi | cut -d' ' -f1`\"" updates.json.tmpl |
 jq --arg version "$version" '.addons["zoteroswisscoveryubbernlocations@ubbe.org"].updates[0].version = $version' |
 jq --arg updatelink "$updatelink" '.addons["zoteroswisscoveryubbernlocations@ubbe.org"].updates[0].update_link = $updatelink' > updates.json
 cp updates.json update.rdf
@@ -49,15 +49,7 @@ git add updates.json update.rdf
 git commit -m "Update update.json"
 
 ################################################
-# Create PR using the Github CLI
+# Push and create PR using the Github CLI
 ################################################q
+git push
 gh pr create
-
-
-################################################
-# Create release using the Github CLI after merge
-################################################
-
-# gh release create $version build/${assetname}-${version}.xpi -t "${version}"
-
-

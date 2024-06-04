@@ -1,13 +1,13 @@
 #!/bin/bash
 
-version="$1"
-if [ -z "$version" ]; then
-	read -p "Enter new version number: " version
-fi
+# Get the current date and time in the format "YYYYMMDDHHMM"
+timestamp=$(date +"%Y%m%d%H%M")
 
-echo "Building version ${version}"
+# Get the base name and version from command-line arguments
+baseName=${1:-"plugin"}
+version=${2:-$timestamp}
 
-assetname=gh-actions-test
+echo "Building ${baseName}-${version}"
 
 # Create build folder
 rm -rf build
@@ -15,4 +15,4 @@ mkdir build
 
 # Create build zip
 cd src
-zip -r ../build/${assetname}-${version}.xpi *
+zip -r ../build/${baseName}-${version}.xpi *

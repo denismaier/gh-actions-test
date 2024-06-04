@@ -4,7 +4,7 @@ on:
   workflow_dispatch: # allows to manually trigger the workflow_dispatch
 
 env:
-  ASSET_BASENAME: gh-actions-test
+  BUILD_BASENAME: gh-actions-test
   VERSION: x.x.x # add this only to satify the linter
 
 jobs:
@@ -25,4 +25,4 @@ jobs:
 
       - name: Asset Name
         run: |
-          echo ${{ env.ASSET_BASENAME }} 
+          echo ${{ env.BUILD_BASENAME }} 
