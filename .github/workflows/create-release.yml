@@ -55,25 +55,8 @@ jobs:
           echo "Creating release $VERSION"
           gh release create v${VERSION} build/${BUILD_BASENAME}-${VERSION}.xpi -t "v${VERSION}" --notes-file release-notes-${VERSION}.md
           echo "Created release $VERSION"
-
-      # - name: create release
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     version=$(jq -r '.version' src/manifest.json)
-
-      #     # Build release
-      #     echo "Building release ${BUILD_BASENAME}-$version"
-      #     ./build.sh ${BUILD_BASENAME} $version
-      #     echo "Built release ${BUILD_BASENAME}-$version"
-
-      #     # Change notes
-      #     echo "Extract release notes from CHANGELOG.md"
-      #     echo "## Changes" >> release-notes-${version}.md
-      #     sed -n "/## \[v${version}\]/,/^## /p" CHANGELOG.md | sed '1d;$d' >> release-notes-${version}.md
-      #     echo "Extracted release notes from CHANGELOG.md"
-          
-      #     # Create release
-      #     echo "Creating release $version"
-      #     gh release create v${version} build/${BUILD_BASENAME}-${version}.xpi -t "v${version}" --notes-file release-notes-${version}.md
-      #     echo "Created release $version"
+    
+      - name: Cleanup
+        run: | 
+          rm release-notes-${VERSION}.md
+          rm -rf build
