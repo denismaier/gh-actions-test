@@ -38,7 +38,7 @@ jobs:
           ./build.sh $version
           echo "Built release $version"
           echo "Extract release notes from CHANGELOG.md"
-          sed -n "/## \[${version}\]/,/## /p" CHANGELOG.md | sed '$d' > release-notes-${version}.md 
+          sed -n "/## \[v${version}\]/,/## /p" CHANGELOG.md | sed '$d' > release-notes-${version}.md 
           echo "Extracted release notes from CHANGELOG.md"
           echo "Creating release $version"
           gh release create v${version} build/gh-actions-test-${version}.xpi -t "v${version}" --notes-file release-notes-${version}.md
