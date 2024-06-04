@@ -41,6 +41,6 @@ jobs:
           mkdir build
           #
           cd src
-          zip -r ../build/${assetname}-${version}.xpi *
+          zip -r ../build/gh-actions-test-${version}.xpi *
           #
           gh release create v${version} build/gh-actions-test-${version}.xpi -t "v${version}" --generate-notes
