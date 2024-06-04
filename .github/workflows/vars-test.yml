@@ -18,3 +18,7 @@ jobs:
       - name: Tell Version
         run: |
           echo ${{ env.VERSION }}
+
+      - name: Asset Name
+        run: |
+          echo ${{ env.ASSET_NAME }} 
