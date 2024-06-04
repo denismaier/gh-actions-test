@@ -20,7 +20,8 @@ echo "Next version set to: $version"
 ################################################
 
 #perl -pi -e "s/em:version=\"[^\"]*/em:version=\"$version/;" src/install.rdf
-jq --arg ver "$version" '.version = $ver' "src/manifest.json" > src/manifest.json
+# jq --arg ver "$version" '.version = $ver' "src/manifest.json" > src/manifest.json
+jq --arg ver "$version" '.version = $ver' --in-place "src/manifest.json"
 
 git add src/manifest.json #src/install.rdf
 git commit -m "bump version"
