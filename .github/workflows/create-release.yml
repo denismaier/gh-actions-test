@@ -30,6 +30,8 @@ jobs:
           echo "Current version: $version"
     
       - name: create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           version=$(jq -r '.version' src/manifest.json)
           echo "Creating release $version"
