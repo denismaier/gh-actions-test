@@ -3,6 +3,9 @@ name: Vars Test
 on:
   workflow_dispatch: # allows to manually trigger the workflow_dispatch
 
+env:
+  ASSET_NAME: asset.xpi
+  
 jobs:
   create-release:
     runs-on: ubuntu-latest
