@@ -4,8 +4,9 @@ on:
   workflow_dispatch: # allows to manually trigger the workflow_dispatch
 
 env:
-  ASSET_NAME: asset.xpi
-  
+  ASSET_BASENAME: gh-actions-test
+  VERSION: x.x.x # add this only to satify the linter
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -24,4 +25,4 @@ jobs:
 
       - name: Asset Name
         run: |
-          echo ${{ env.ASSET_NAME }} 
+          echo ${{ env.ASSET_BASENAME }} 
