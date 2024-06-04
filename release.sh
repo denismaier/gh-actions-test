@@ -22,14 +22,14 @@ echo "Next version set to: $version"
 #perl -pi -e "s/em:version=\"[^\"]*/em:version=\"$version/;" src/install.rdf
 jq --arg ver "$version" '.version = $ver' "src/manifest.json" > src/manifest.json
 
-git add install.rdf manifest.json
+git add src/manifest.json #src/install.rdf
 git commit -m "bump version"
 
 ################################################
 # Build
 ################################################
 
-./build.sh $assetname $version
+./build.sh $baseName $version
 
 ################################################
 # Update updates.json
