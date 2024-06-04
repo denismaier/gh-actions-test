@@ -28,3 +28,10 @@ jobs:
         run: |
           version=$(jq -r '.version' src/manifest.json)
           echo "Current version: $version"
+    
+      - name: create release
+        run: |
+          version=$(jq -r '.version' src/manifest.json)
+          echo "Creating release $version"
+          ./build.sh $version
+          gh release create v${version} build/gh-actions-test-${version}.xpi -t "v${version}" --generate-notes
