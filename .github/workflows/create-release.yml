@@ -8,7 +8,7 @@ on:
     paths:
       - 'src/manifest.json'
 
-  workflow_dispatch: # allows you to manually trigger the workflow_dispatch
+  workflow_dispatch: # allows to manually trigger the workflow_dispatch
 
 jobs:
   create-release:
