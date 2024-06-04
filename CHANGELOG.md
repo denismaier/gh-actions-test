@@ -1,4 +1,10 @@
 # Changelog
+
+## [v0.2.3]
+- Nothing special
+- No fixes
+- No changes at all
+
 ## [v0.2.2]
 - Again something
 - Another fix
