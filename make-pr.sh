@@ -5,7 +5,7 @@
 ################################################
 
 current=$(git describe --tags)
-echo "Current version: $current"
+echo "Last version: $current"
 read -r -p "Enter new version number: " version
 echo "Next version set to: $version"
 
@@ -14,7 +14,7 @@ echo "Next version set to: $version"
 ################################################
 
 #perl -pi -e "s/em:version=\"[^\"]*/em:version=\"$version/;" src/install.rdf
-perl -pi -e "s/\"version\": \"[^\"]*\"/\"version\": \"$version\"/" src/manifest.json
+jq --arg ver "$version" '.version = $ver' "src/manifest.json" > src/manifest.json
 
 ################################################
 ## Make PR using the Github CLI

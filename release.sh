@@ -1,19 +1,27 @@
 #!/bin/bash
 
+set -eou pipefail
+
 assetname=gh-actions-test
 
 ################################################
-# Checkout master
+# Get next version number
 ################################################
 
-git checkout main # or master
-git pull
+current=$(git describe --tags)
+echo "Last version: $current"
+read -r -p "Enter new version number (without v): " version
+echo "Next version set to: $version"
 
 ################################################
-# Get version number from manifest json
+## Update install.rdf and manifest.json
 ################################################
 
-version=$(jq -r '.version' "src/manifest.json")
+#perl -pi -e "s/em:version=\"[^\"]*/em:version=\"$version/;" src/install.rdf
+jq --arg ver "$version" '.version = $ver' "src/manifest.json" > src/manifest.json
+
+git add install.rdf manifest.json
+git commit -m "bump version"
 
 ################################################
 # Build
@@ -22,17 +30,8 @@ version=$(jq -r '.version' "src/manifest.json")
 ./build.sh $version
 
 ################################################
-# Create release using the Github CLI
-################################################
-
-gh release create $version build/${assetname}-${version}.xpi -t "${version}" --generate-notes
-
-################################################
 # Update updates.json
 ################################################
-
-git branch publish-${version}
-git checkout publish-${version}
 
 updatelink=https://github.com/denismaier/gh-actions-test/releases/download/${version}/${assetname}-${version}.xpi
 
@@ -52,4 +51,13 @@ git commit -m "Update update.json"
 ################################################
 # Create PR using the Github CLI
 ################################################q
-gh pr create --title "Update update.json for $version" --body "Adjust version info for $version"
+gh pr create
+
+
+################################################
+# Create release using the Github CLI after merge
+################################################
+
+# gh release create $version build/${assetname}-${version}.xpi -t "${version}"
+
+
