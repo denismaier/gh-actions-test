@@ -13,6 +13,7 @@ on:
 env:
   BUILD_BASENAME: gh-actions-test
   VERSION: x.x.x # add this only to satify the linter
+  BUILD_DIR: build
 
 jobs:
   create-release:
@@ -38,7 +39,7 @@ jobs:
       - name: Build release
         run: |
           echo "Building release ${BUILD_BASENAME}-$VERSION"
-          ./build.sh ${BUILD_BASENAME} $VERSION
+          scripts/build.sh ${BUILD_BASENAME} $VERSION
           echo "Built release ${BUILD_BASENAME}-$VERSION"
 
       - name: Get release notes
@@ -53,10 +54,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Creating release $VERSION"
-          gh release create v${VERSION} build/${BUILD_BASENAME}-${VERSION}.xpi -t "v${VERSION}" --notes-file release-notes-${VERSION}.md
+          gh release create v${VERSION} ${BUILD_DIR}/${BUILD_BASENAME}-${VERSION}.xpi -t "v${VERSION}" --notes-file release-notes-${VERSION}.md
           echo "Created release $VERSION"
     
       - name: Cleanup
         run: | 
           rm release-notes-${VERSION}.md
-          rm -rf build
+          rm -rf ${BUILD_DIR}
