@@ -23,12 +23,11 @@ update-files: $(XPI_FILE)
 
 build: $(XPI_FILE)
 
-$(XPI_FILE): .version
+$(XPI_FILE): $(wildcard src/*)
 	./scripts/build.sh $(BASE_NAME) $(VERSION)
 
 .version: check-tools
 	./scripts/manage_version.sh
-	touch .version
 
 check-tools:
 	./scripts/check_tools.sh
