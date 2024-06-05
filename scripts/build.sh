@@ -26,6 +26,6 @@ cd ..
 if [ ! -f "${BUILD_DIR}/${baseName}-${version}.xpi" ]; then
     echo "Error: Build output file not found!"
     exit 1
-fi
+fig
 
 echo "Build successful: ${BUILD_DIR}/${baseName}-${version}.xpi"
