@@ -1,5 +1,6 @@
 # Changelog
 
+<<<<<< 0.4
 ## [v0.4]
 - viel Zeug
 
