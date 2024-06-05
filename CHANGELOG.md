@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.2.5]
+- Jo
+
 ## [v0.2.3]
 - Nothing special
 - No fixes
