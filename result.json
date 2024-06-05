@@ -1,0 +1,22 @@
+{
+  "addons": {
+    "zoteroswisscoveryubbernlocations@ubbe.org": {
+      "updates": [
+        {
+          "version": 12,
+          "update_link": "wherever",
+          "update_hash": "something",
+          "applications": {
+            "gecko": {
+              "strict_min_version": "60.0"
+            },
+            "zotero": {
+              "strict_min_version": "6.999",
+              "strict_max_version": "7.0.*"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

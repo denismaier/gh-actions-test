@@ -17,12 +17,6 @@ read -r -p "Enter new version number (without v), or press enter to use current 
 version="${version:-$current}"
 echo "Next version set to: $version"
 
-# Update manifest.json
-jq --arg ver "$version" '.version = $ver' "$MANIFEST_JSON" > temp.json && mv temp.json "$MANIFEST_JSON"
-
-# Update install.rdf
-#perl -pi -e "s/em:version=\"[^\"]*\"/em:version=\"$version\"/" "$INSTALL_RDF"
-
 # Update files only if the version number has changed
 if [ "$current" != "$version" ]; then
     # Update manifest.json
@@ -38,9 +32,4 @@ if [ "$current" != "$version" ]; then
 else
     echo "Version number has not changed. No updates made."
 fi
-
-# Update the .version file
-echo "$version" > .version
-
-
 
