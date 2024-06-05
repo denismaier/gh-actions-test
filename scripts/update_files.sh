@@ -4,12 +4,14 @@ set -euo pipefail
 # Load environment variables from .env file
 export $(grep -v '^#' .env | xargs)
 
-version=$(cat .version)
+VERSION=$(jq -r '.version' src/manifest.json)
 
-updatelink="https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${version}/${BASE_NAME}-${version}.xpi"
-update_hash="sha256:$(shasum -a 256 "${BUILD_DIR}/${BASE_NAME}-${version}.xpi" | cut -d' ' -f1)"
+echo "Updating update manifests for $BASE_NAME-$VERSION"
 
-jq --arg version "$version" \
+updatelink="https://github.com/${REPO_OWNER}/${REPO_NAME}/releases/download/${VERSION}/${BASE_NAME}-${VERSION}.xpi"
+update_hash="sha256:$(shasum -a 256 "${BUILD_DIR}/${BASE_NAME}-${VERSION}.xpi" | cut -d' ' -f1)"
+
+jq --arg version "$VERSION" \
     --arg updatelink "$updatelink" \
     --arg updatehash "$update_hash" \
     --arg pluginID "$PLUGIN_ID" \

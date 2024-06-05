@@ -1,5 +1,9 @@
 # Changelog
 
+<<<<<< 0.4
+## [v0.4]
+- viel Zeug
+
 ## [v0.3.8]
 - Das sollte gehen
 

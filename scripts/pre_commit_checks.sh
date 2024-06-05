@@ -5,7 +5,7 @@ set -euo pipefail
 export $(grep -v '^#' .env | xargs)
 
 # Get the current version from the .version file
-current_version=$(cat .version)
+current_version=$(jq -r '.version' src/manifest.json)
 
 # Check if the changelog contains a ##-level heading for the current release
 if ! grep -q "## \[v$current_version\]" CHANGELOG.md; then
