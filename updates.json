@@ -3,9 +3,9 @@
     "zoteroswisscoveryubbernlocations@ubbe.org": {
       "updates": [
         {
-          "version": "51",
-          "update_link": "https://github.com/denismaier/gh-actions-test/releases/download/47/gh-actions-test-47.xpi",
-          "update_hash": "sha256:3e8a71eba7b89fd630cf2899f6f54a4219afc867efffab3ea9666566759feb97",
+          "version": "0.2.5",
+          "update_link": "https://github.com/denismaier/gh-actions-test/releases/download/0.2.5/gh-actions-test-0.2.5.xpi",
+          "update_hash": "sha256:57d512bd3b24dfade106ca56e78b354d03f7c3c3805e8f7ac85f86f2542128be",
           "applications": {
             "gecko": {
               "strict_min_version": "60.0"
