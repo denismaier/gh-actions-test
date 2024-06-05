@@ -5,7 +5,7 @@
         {
           "version": "0.2.5",
           "update_link": "https://github.com/denismaier/gh-actions-test/releases/download/0.2.5/gh-actions-test-0.2.5.xpi",
-          "update_hash": "sha256:57d512bd3b24dfade106ca56e78b354d03f7c3c3805e8f7ac85f86f2542128be",
+          "update_hash": "sha256:1b357dfa4487d8e2e81e9f8204e1a935e562fdaaf88f5e5c0e6e6265d44118d7",
           "applications": {
             "gecko": {
               "strict_min_version": "60.0"
