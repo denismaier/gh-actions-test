@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.6
+- Test
+
 ## v0.5
 - viel Zeug
 
