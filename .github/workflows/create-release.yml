@@ -39,7 +39,14 @@ jobs:
 
       - name: Extract version number
         id: extract_version
-        run: echo "VERSION=$(jq -r '.version' src/manifest.json)" >> $GITHUB_ENV 
+        run: echo "VERSION=$(jq -r '.version' src/manifest.json)" >> $GITHUB_ENV
+      
+      - name: Check changelog for version entry
+        run: |
+          if ! grep -q "## v${VERSION}" "${CHANGELOG}"; then
+            echo "Error: ${CHANGELOG} does not contain a heading for version v${VERSION}."
+            exit 1
+          fi
 
       - name: Build release
         run: |
