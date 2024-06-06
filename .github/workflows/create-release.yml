@@ -49,10 +49,10 @@ jobs:
 
       - name: Get release notes
         run: |
-          echo "Extract release notes from CHANGELOG.md"
+          echo "Extract release notes from ${CHANGELOG}"
           echo "## Changes" >> release-notes-${VERSION}.md
-          sed -n "/## v${VERSION}/,/^## /p" CHANGELOG.md | sed '1d;$d' >> release-notes-${VERSION}.md
-          echo "Extracted release notes from CHANGELOG.md"
+          sed -n "/## v${VERSION}/,/^## /p" ${CHANGELOG} | sed '1d;$d' >> release-notes-${VERSION}.md
+          echo "Extracted release notes from ${CHANGELOG}"
       
       - name: Create release
         env:
