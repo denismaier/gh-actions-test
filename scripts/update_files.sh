@@ -4,7 +4,7 @@ set -euo pipefail
 # Load environment variables from .env file
 export $(grep -v '^#' .env | xargs)
 
-VERSION=$(jq -r '.version' src/manifest.json)
+# VERSION=$(jq -r '.version' src/manifest.json)
 
 echo "Updating update manifests for $BASE_NAME-$VERSION"
 

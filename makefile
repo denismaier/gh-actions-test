@@ -19,6 +19,16 @@ endef
 VERSION := $(call get_version)
 XPI_FILE := $(BUILD_DIR)/$(BASE_NAME)-$(VERSION).xpi
 
+# Export environment variables to make them available in scripts
+export BASE_NAME BUILD_DIR MANIFEST_JSON UPDATE_JSON_FILE UPDATE_RDF_FILE XPI_FILE VERSION
+
+#########################
+# Build targets
+#########################
+
+# Default Target
+.DEFAULT_GOAL := all
+
 # Define dependencies
 all: pr
 
@@ -31,7 +41,7 @@ update-files: build
 
 build: $(BUILD_DIR)/$(BASE_NAME)-$(call get_version).xpi
 
-# Build target, depends on manifest.json
+# Build target, depends on manifest.json and source files
 $(BUILD_DIR)/$(BASE_NAME)-$(call get_version).xpi: $(wildcard src/*) $(MANIFEST_JSON)
 	./scripts/build.sh $(BASE_NAME) $(call get_version)
 
@@ -40,10 +50,10 @@ version: $(MANIFEST_JSON)
 $(MANIFEST_JSON): check-tools
 	./scripts/manage_version.sh
 	$(eval VERSION := $(call get_version))
+	$(eval export VERSION)	
 	
-
 check-tools:
 	./scripts/check_tools.sh
 
 clean:
-	rm -f $(BUILD_DIR)/*.xpi $(UPDATE_RDF_FILE) $(UPDATE_JSON_FILE)
+	rm -f $(BUILD_DIR)/*.xpi

@@ -46,7 +46,7 @@ jobs:
         run: |
           echo "Extract release notes from CHANGELOG.md"
           echo "## Changes" >> release-notes-${VERSION}.md
-          sed -n "/## \[v${VERSION}\]/,/^## /p" CHANGELOG.md | sed '1d;$d' >> release-notes-${VERSION}.md
+          sed -n "/## v${VERSION}/,/^## /p" CHANGELOG.md | sed '1d;$d' >> release-notes-${VERSION}.md
           echo "Extracted release notes from CHANGELOG.md"
       
       - name: Create release
