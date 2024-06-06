@@ -32,6 +32,10 @@ jobs:
           set -o allexport
           source .env
           set +o allexport
+          # Export all loaded variables to GITHUB_ENV
+          for var in $(cat .env | grep -v '^#' | xargs); do
+            echo "$var" >> $GITHUB_ENV
+          done
 
       - name: Extract version number
         id: extract_version
