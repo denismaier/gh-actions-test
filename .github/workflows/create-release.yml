@@ -39,9 +39,9 @@ jobs:
 
       - name: Build release
         run: |
-          echo "Building release ${BUILD_BASENAME}-$VERSION"
-          scripts/build.sh ${BUILD_BASENAME} $VERSION
-          echo "Built release ${BUILD_BASENAME}-$VERSION"
+          echo "Building release ${BASE_NAME}-$VERSION"
+          scripts/build.sh ${BASE_NAME} $VERSION
+          echo "Built release ${BASE_NAME}-$VERSION"
 
       - name: Get release notes
         run: |
@@ -55,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Creating release $VERSION"
-          gh release create v${VERSION} ${BUILD_DIR}/${BUILD_BASENAME}-${VERSION}.xpi -t "v${VERSION}" --notes-file release-notes-${VERSION}.md
+          gh release create v${VERSION} ${BUILD_DIR}/${BASE_NAME}-${VERSION}.xpi -t "v${VERSION}" --notes-file release-notes-${VERSION}.md
           echo "Created release $VERSION"
     
       - name: Cleanup
