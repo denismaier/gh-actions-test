@@ -20,7 +20,8 @@ VERSION := $(call get_version)
 XPI_FILE := $(BUILD_DIR)/$(BASE_NAME)-$(VERSION).xpi
 
 # Export environment variables to make them available in scripts
-export BASE_NAME BUILD_DIR MANIFEST_JSON UPDATE_JSON_FILE UPDATE_RDF_FILE XPI_FILE VERSION
+export XPI_FILE 
+export VERSION
 
 #########################
 # Build targets
