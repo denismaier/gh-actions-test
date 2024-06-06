@@ -13,4 +13,11 @@ if ! grep -q "## v$current_version" "${CHANGELOG}"; then
     exit 1
 fi
 
+# Check for uncommitted changes in the changelog
+if [[ -n $(git status --porcelain "${CHANGELOG}") ]]; then
+    echo "Error: There are uncommitted changes in the changelog."
+    exit 1
+fi
+
+
 echo "Pre-commit checks passed."
